@@ -4,16 +4,20 @@ import pydirectinput
 
 from contants import c_contants
 from equipment import getCurrentWepone
+import mainWindow
+
 pydirectinput.PAUSE = 0
 
 
 def changeOpen():
     c_mouse.openFlag = not c_mouse.openFlag
     print("open: {}".format(c_mouse.openFlag))
+    mainWindow.global_main_window.label_run.setText("运行中" if c_mouse.openFlag else "已停止")
+
 
 def moveMouse():
     curWepone = getCurrentWepone()
-    if(curWepone.name == 'none'):
+    if (curWepone.name == 'none'):
         return
     print(curWepone.name)
 
@@ -29,7 +33,7 @@ def moveMouse():
                 holdK = curWepone.hold
             postureK = curWepone.posture_states[c_contants.posture]
             moveSum = int(round(basic[i] * curWepone.k * holdK * postureK, 2))
-            moveItem = int(round(moveSum/speed*15, 2))
+            moveItem = int(round(moveSum / speed * 15, 2))
             while True:
                 if moveSum > moveItem:
                     pydirectinput.move(xOffset=0, yOffset=moveItem, relative=True)
@@ -38,7 +42,7 @@ def moveMouse():
                     pydirectinput.move(xOffset=0, yOffset=moveSum, relative=True)
                     moveSum = 0
                 elapsed = (round(time.perf_counter(), 3) * 1000 - startTime)
-                if not canFire() or elapsed > (i+1)*speed + 10:
+                if not canFire() or elapsed > (i + 1) * speed + 10:
                     if moveSum > 0:
                         pydirectinput.move(xOffset=0, yOffset=moveSum, relative=True)
                     break
@@ -53,17 +57,18 @@ def moveMouse():
             moveSum = int(round(basic[i] * curWepone.k * holdK, 2))
             i += 1
             while True:
-                if(moveSum > 10):
+                if (moveSum > 10):
                     pydirectinput.move(xOffset=0, yOffset=10, relative=True)
                     moveSum -= 10
-                elif(moveSum > 0):
+                elif (moveSum > 0):
                     pydirectinput.move(xOffset=0, yOffset=moveSum, relative=True)
                     moveSum = 0
                 elapsed = (round(time.perf_counter(), 3) * 1000 - startTime)
-                if not canFire() or elapsed > (i+1)*speed + 10:
+                if not canFire() or elapsed > (i + 1) * speed + 10:
                     break
                 time.sleep(0.01)
             pydirectinput.click()
+
 
 def handlePressed():
     if not canFire():
@@ -78,19 +83,23 @@ def onClick(x, y, button, pressed):
         handlePressed()
     return not c_contants.exitFlag
 
-#按下f1测试程序生效
+
+# 按下f1测试程序生效
 def testMouse():
     if c_mouse.openFlag:
         for i in range(10):
             pydirectinput.moveRel(xOffset=0, yOffset=10)
             time.sleep(0.1)
 
+
 # 是否可以开火
 def canFire():
     return c_mouse.leftPressed and c_mouse.openFlag and not c_contants.exitFlag and not c_contants.bagOpen
 
+
 class c_mouse():
     leftPressed = False
     openFlag = True
+
     def __init__(self):
         pass
