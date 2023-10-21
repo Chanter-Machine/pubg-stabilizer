@@ -4,8 +4,10 @@ from wepon import c_wepone
 from Screen import shotCut
 import os
 from contants import c_contants
-from mainWindow import global_main_window as main_window
+import mainWindow
 import time
+
+
 def getCurrentWepone():
     if 1 == c_equipment.switch:
         return c_equipment.wepone1
@@ -14,7 +16,8 @@ def getCurrentWepone():
     else:
         return c_equipment.none
 
-#对比图片获取名字
+
+# 对比图片获取名字
 def compareAndGetName(screenImg, dir):
     content = os.listdir(dir)
     name = 'none'
@@ -27,37 +30,38 @@ def compareAndGetName(screenImg, dir):
             name = str(fileName)[:-4]
     return name
 
-#识别装备
+
+# 识别装备
 def recognizeEquiment():
-    #武器位置45
+    # 武器位置45
     screen = cv2.imread("./resource/shotcut/screen.bmp", 0)
-    #武器名字  1825, 125, 80, 40 1
+    # 武器名字  1825, 125, 80, 40 1
     screenWepon1 = screen[0:40, 45:125]
     w1Name = compareAndGetName(screenWepon1, "./resource/guns/")
-    #1825,431,80,40  1  307:347, 45:125
+    # 1825,431,80,40  1  307:347, 45:125
     screenWepon2 = screen[274:314, 45:125]
     w2Name = compareAndGetName(screenWepon2, "./resource/guns/")
-    #倍镜 2136, 160, 62, 30  1
+    # 倍镜 2136, 160, 62, 30  1
     screenMirror1 = screen[35:65, 356:418]
     m1Name = compareAndGetName(screenMirror1, "./resource/mirrors/")
-    #2136, 433, 62, 30  1
+    # 2136, 433, 62, 30  1
     screenMirror2 = screen[308:338, 356:418]
     m2Name = compareAndGetName(screenMirror2, "./resource/mirrors/")
-    #握把 1915,310,50,52  1
+    # 握把 1915,310,50,52  1
     screenGrip1 = screen[185:237, 135:185]
     g1Name = compareAndGetName(screenGrip1, "resource/grip/")
-    #1915, 582, 50, 52  1
+    # 1915, 582, 50, 52  1
     screenGrip2 = screen[458:510, 135:185]
     g2Name = compareAndGetName(screenGrip2, "resource/grip/")
-    #枪托 2344,314,50,48 1
+    # 枪托 2344,314,50,48 1
     screenButt1 = screen[189:237, 564:614]
     butt1Name = compareAndGetName(screenButt1, "./resource/butt/")
-    #2344, 582, 50, 48 1
+    # 2344, 582, 50, 48 1
     screenButt2 = screen[462:510, 564:614]
     butt2Name = compareAndGetName(screenButt2, "./resource/butt/")
-    #枪口 1780,336,50,52  1   1780,310,50,52
+    # 枪口 1780,336,50,52  1   1780,310,50,52
     muzzleName1 = 'none'
-    #1780, 642, 50, 52  1    1780,583, 50, 52
+    # 1780, 642, 50, 52  1    1780,583, 50, 52
     muzzleName2 = 'none'
     if w1Name != 'none':
         try:
@@ -73,7 +77,7 @@ def recognizeEquiment():
             wepon2 = c_contants.guns[w2Name]
             gunType2 = wepon2['type']
             muzzle_path2 = "./resource/muzzle/" + gunType2 + "/"
-            screenMuzzle2= screen[458:510, 0:50]
+            screenMuzzle2 = screen[458:510, 0:50]
             muzzleName2 = compareAndGetName(screenMuzzle2, muzzle_path2)
         except Exception as e:
             print(type(e), '::', e)
@@ -81,15 +85,15 @@ def recognizeEquiment():
     gun2 = c_wepone(w2Name, m2Name, muzzleName2, g2Name, butt2Name)
     print(w1Name, m1Name, muzzleName1, g1Name, butt1Name)
     print(w2Name, m2Name, muzzleName2, g2Name, butt2Name)
-    main_window.label_gun_1.setText(w1Name)
-    main_window.label_gun_2.setText(w2Name)
+    mainWindow.global_main_window.label_gun_1.setText(w1Name)
+    mainWindow.global_main_window.label_gun_2.setText(w2Name)
     c_equipment.wepone1 = gun1
     c_equipment.wepone2 = gun2
 
 
 def isBagOpen():
-    #背包截图 501,78,72,38
-    screen = shotCut(501,78,72,38)
+    # 背包截图 501,78,72,38
+    screen = shotCut(501, 78, 72, 38)
     bag = cv2.imread("./resource/bag.bmp", 0)
     res = calculate_ssim(numpy.asarray(screen), numpy.asarray(bag))
     if res > 0.5:
@@ -100,16 +104,18 @@ def isBagOpen():
         return True
     return False
 
-#检测姿势
+
+# 检测姿势
 def checkPosture():
     c_equipment.checkPostureFlag = True
-    #姿势946, 1320, 42, 46
+    # 姿势946, 1320, 42, 46
     screen = shotCut(946, 1320, 42, 46)
     name = compareAndGetName(screen, "./resource/posture/")
     map = {"none": 0, "squat": 1, "down": 2}
     c_contants.posture = map[name]
     print("postureName: " + name)
     c_equipment.checkPostureFlag = False
+
 
 def check():
     time.sleep(0.01)
@@ -120,6 +126,7 @@ def check():
     if bagOpen:
         recognizeEquiment()
     c_equipment.checkFlag = False
+
 
 def ssim(img1, img2):
     C1 = (0.01 * 255) ** 2
@@ -156,19 +163,20 @@ def calculate_ssim(img1, img2):
     else:
         raise ValueError('Wrong input image dimensions.')
 
+
 # 装备栏
 class c_equipment():
-    #是否打开装备栏 防重
+    # 是否打开装备栏 防重
     checkFlag = False
-    #检测姿势，防重
+    # 检测姿势，防重
     checkPostureFlag = False
-    #装备1
+    # 装备1
     wepone1 = c_wepone('none', '', '', '', '')
-    #装备2
+    # 装备2
     wepone2 = c_wepone('none', '', '', '', '')
-    #无装备
+    # 无装备
     none = c_wepone('none', '', '', '', '')
-    #选择几号装备
+    # 选择几号装备
     switch = 1
 
     def __init__(self):

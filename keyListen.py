@@ -1,11 +1,10 @@
-import sys
 import pynput.keyboard as keyboard
 from pynput import mouse
 from equipment import c_equipment, check, checkPosture
 from mouse import *
 from contants import c_contants
-from mainWindow import run_main_window
-from mainWindow import global_main_window as main_window
+import mainWindow
+
 
 # 1，2选择武器
 # num_lock开启关闭
@@ -29,17 +28,20 @@ def onRelease(key):
         if '1' == key.char:
             print("weapon 1")
             c_equipment.switch = 1
-            main_window.label_use_gun.setText(c_equipment.wepone1.name)
+            mainWindow.global_main_window.label_use_gun.setText(c_equipment.wepone1.name)
         elif '2' == key.char:
             print("weapon 2")
-            main_window.label_use_gun.setText(c_equipment.wepone2.name)
             c_equipment.switch = 2
+            mainWindow.global_main_window.label_use_gun.setText(c_equipment.wepone2.name)
         elif '3' == key.char:  # 手枪
             c_equipment.switch = 3
+            mainWindow.global_main_window.label_use_gun.setText("手枪")
         elif '4' == key.char:  # 刀具
             c_equipment.switch = 3
+            mainWindow.global_main_window.label_use_gun.setText("刀具")
         elif '5' == key.char:  # 手雷
             c_equipment.switch = 3
+            mainWindow.global_main_window.label_use_gun.setText("手雷")
         elif 'c' == key.char or 'z' == key.char:
             asyncHandlePosture()
         # print("key char" + str(key.char))
@@ -66,15 +68,12 @@ def onPressed(key):
             c_contants.hold = True
 
 
-# 监听键盘
-def listen_keybord():
-    listener = keyboard.Listener(on_press=onPressed, on_release=onRelease)
-    listener.start()
-
-
-# 监听鼠标
-def listen_mouse():
-    with mouse.Listener(on_click=onClick) as listener:
-        listener.join()
-
+keyboard_listener = None
+mouse_listener = None
+# 初始化监听键盘鼠标
+def init_listener():
+    global keyboard_listener
+    keyboard_listener = keyboard.Listener(on_press=onPressed, on_release=onRelease)
+    global mouse_listener
+    mouse_listener = mouse.Listener(on_click=onClick)
 

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>PUBG-Stabilizer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -39,7 +39,7 @@
        <item>
         <widget class="QLabel" name="label_run">
          <property name="text">
-          <string>停止</string>
+          <string>运行中</string>
          </property>
         </widget>
        </item>
