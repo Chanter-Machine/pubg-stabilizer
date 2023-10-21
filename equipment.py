@@ -4,6 +4,7 @@ from wepon import c_wepone
 from Screen import shotCut
 import os
 from contants import c_contants
+from mainWindow import global_main_window as main_window
 import time
 def getCurrentWepone():
     if 1 == c_equipment.switch:
@@ -80,6 +81,8 @@ def recognizeEquiment():
     gun2 = c_wepone(w2Name, m2Name, muzzleName2, g2Name, butt2Name)
     print(w1Name, m1Name, muzzleName1, g1Name, butt1Name)
     print(w2Name, m2Name, muzzleName2, g2Name, butt2Name)
+    main_window.label_gun_1.setText(w1Name)
+    main_window.label_gun_2.setText(w2Name)
     c_equipment.wepone1 = gun1
     c_equipment.wepone2 = gun2
 

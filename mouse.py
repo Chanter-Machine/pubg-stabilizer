@@ -4,12 +4,14 @@ import pydirectinput
 
 from contants import c_contants
 from equipment import getCurrentWepone
+from mainWindow import global_main_window as main_window
 pydirectinput.PAUSE = 0
 
 
 def changeOpen():
     c_mouse.openFlag = not c_mouse.openFlag
     print("open: {}".format(c_mouse.openFlag))
+    main_window.label_run.setText("运行中" if c_mouse.openFlag else "已停止")
 
 def moveMouse():
     curWepone = getCurrentWepone()
