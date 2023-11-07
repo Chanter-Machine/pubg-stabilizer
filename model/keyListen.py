@@ -1,9 +1,9 @@
 import pynput.keyboard as keyboard
 from pynput import mouse
-from equipment import c_equipment, check, checkPosture
-from mouse import *
-from contants import c_contants
-import mainWindow
+from model.equipment import c_equipment, check, checkPosture
+from model.mouse import *
+from model.contants import c_contants
+from view_model import mainWindow
 
 
 # 1，2选择武器
@@ -68,12 +68,7 @@ def onPressed(key):
             c_contants.hold = True
 
 
-keyboard_listener = None
-mouse_listener = None
 # 初始化监听键盘鼠标
 def init_listener():
-    global keyboard_listener
-    keyboard_listener = keyboard.Listener(on_press=onPressed, on_release=onRelease)
-    global mouse_listener
-    mouse_listener = mouse.Listener(on_click=onClick)
-
+    c_contants.keyboard_listener = keyboard.Listener(on_press=onPressed, on_release=onRelease)
+    c_contants.mouse_listener = mouse.Listener(on_click=onClick)

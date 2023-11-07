@@ -1,13 +1,9 @@
-import os
-
 import cv2
 import numpy as np
 import pydirectinput
 
-from Screen import shotCut,shotCutTest
+from model.Screen import shotCut
 import time
-import pyautogui
-from contants import c_contants
 
 wepone1 = 'none'
 wepone2 = 'none'
@@ -41,7 +37,8 @@ def adaptive_binarization(img):
     C = 5
     img2 = cv2.adaptiveThreshold(img, maxval, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, blockSize, C)
     return img2
-from equipment import compareAndGetName,calculate_ssim
+
+
 if __name__ == '__main__':
     # im = shotCutTest()
     # img2 = adaptive_binarization(np.array(im))

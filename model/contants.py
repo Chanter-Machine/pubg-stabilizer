@@ -1,5 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor
-
+import json
 
 class c_contants():
     # 程序退出标记
@@ -12,13 +12,14 @@ class c_contants():
     posture = 0
     pool = ThreadPoolExecutor(max_workers=10)
 
-    import json
-
     # 读取JSON文件
-    with open('config.json', 'r') as file:
+    with open('./resource/config.json', 'r') as file:
         data = json.load(file)
 
     guns = data
+
+    keyboard_listener = None
+    mouse_listener = None
 
     # guns = {
     #     "none": {
