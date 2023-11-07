@@ -1,4 +1,7 @@
 import sys
+
+from PySide6.QtCore import QMetaObject, Qt, Q_ARG
+
 from view.mainWindowUi import Ui_MainWindow
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import model.keyListen
@@ -61,8 +64,11 @@ class MainWindow(QMainWindow):
     def update_equipment(self):
         self.ui.label_gun_1.setText(c_equipment.wepone1.name)
         self.ui.label_gun_2.setText(c_equipment.wepone2.name)
-        self.ui.gun1_textEdit.setText(json.dumps(c_equipment.wepone1.basic))
-        self.ui.gun2_textEdit.setText(json.dumps(c_equipment.wepone2.basic))
+        wepone1_basic_json = json.dumps(c_equipment.wepone1.basic)
+        QMetaObject.invokeMethod(self.ui.gun1_textEdit, "setText", Qt.QueuedConnection, Q_ARG(str, wepone1_basic_json))
+        wepone2_basic_json = json.dumps(c_equipment.wepone2.basic)
+        QMetaObject.invokeMethod(self.ui.gun2_textEdit, "setText", Qt.QueuedConnection, Q_ARG(str, wepone2_basic_json))
+
 
     def update_mouse_control_status(self):
         self.ui.label_run.setText("运行中" if c_mouse.openFlag else "已停止")
