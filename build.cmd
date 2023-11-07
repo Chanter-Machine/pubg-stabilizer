@@ -1,1 +1,1 @@
-pyinstaller --noconsole main.py
+pyinstaller --onefile --noconsole main.py
