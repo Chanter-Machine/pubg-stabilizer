@@ -11,19 +11,23 @@
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
+    QCursor, QFont, QFontDatabase, QGradient,
+    QIcon, QImage, QKeySequence, QLinearGradient,
+    QPainter, QPalette, QPixmap, QRadialGradient,
+    QTransform)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLayout,
-    QMainWindow, QMenuBar, QPushButton, QSizePolicy,
-    QStatusBar, QTextEdit, QVBoxLayout, QWidget)
+    QMainWindow, QMenu, QMenuBar, QPushButton,
+    QSizePolicy, QStatusBar, QTextEdit, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(500, 350)
+        self.actionSaveConfig = QAction(MainWindow)
+        self.actionSaveConfig.setObjectName(u"actionSaveConfig")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
@@ -179,10 +183,15 @@ class Ui_MainWindow(object):
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 500, 22))
+        self.menuFile = QMenu(self.menubar)
+        self.menuFile.setObjectName(u"menuFile")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
+
+        self.menubar.addAction(self.menuFile.menuAction())
+        self.menuFile.addAction(self.actionSaveConfig)
 
         self.retranslateUi(MainWindow)
 
@@ -191,6 +200,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"PUBG-Stabilizer", None))
+        self.actionSaveConfig.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58\u6587\u4ef6", None))
         self.label_run_title.setText(QCoreApplication.translate("MainWindow", u"\u8fd0\u884c\u72b6\u6001", None))
         self.label_run.setText(QCoreApplication.translate("MainWindow", u"\u8fd0\u884c\u4e2d", None))
         self.label_use_gun_title.setText(QCoreApplication.translate("MainWindow", u"\u5f53\u524d\u6b66\u5668", None))
@@ -205,5 +215,6 @@ class Ui_MainWindow(object):
         self.gun1_edit_label_2.setText(QCoreApplication.translate("MainWindow", u"\u6b66\u56682\u53f7\u4fee\u6539", None))
         self.pushButton_edit2.setText(QCoreApplication.translate("MainWindow", u"\u4fee\u6539", None))
         self.pushButton_save2.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58", None))
+        self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"\u6587\u4ef6", None))
     # retranslateUi
 

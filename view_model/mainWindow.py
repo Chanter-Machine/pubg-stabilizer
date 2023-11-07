@@ -17,6 +17,8 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        self.ui.actionSaveConfig.triggered.connect(self.save_json_config)
+
         self.ui.pushButton_edit1.clicked.connect(self.on_pushButton_edit1_keyPressEvent)
         self.ui.pushButton_edit2.clicked.connect(self.on_pushButton_edit2_keyPressEvent)
         self.ui.pushButton_save1.clicked.connect(self.on_pushButton_save1_keyPressEvent)
@@ -69,9 +71,12 @@ class MainWindow(QMainWindow):
         wepone2_basic_json = json.dumps(c_equipment.wepone2.basic)
         QMetaObject.invokeMethod(self.ui.gun2_textEdit, "setText", Qt.QueuedConnection, Q_ARG(str, wepone2_basic_json))
 
-
     def update_mouse_control_status(self):
         self.ui.label_run.setText("运行中" if c_mouse.openFlag else "已停止")
+
+    def save_json_config(self):
+        json.dump(c_contants.guns, open("./resource/config.json", "w", encoding="utf-8"), indent=4, ensure_ascii=False)
+        QMessageBox.information(None, "Message", "已保存配置")
 
 
 global_main_window = None
