@@ -1,10 +1,10 @@
 import cv2
 import numpy
-from wepon import c_wepone
-from Screen import shotCut
+from model.wepon import c_wepone
+from model.Screen import shotCut
 import os
-from contants import c_contants
-import mainWindow
+from model.contants import c_contants
+from view_model import mainWindow
 import time
 
 
@@ -49,10 +49,10 @@ def recognizeEquiment():
     m2Name = compareAndGetName(screenMirror2, "./resource/mirrors/")
     # 握把 1915,310,50,52  1
     screenGrip1 = screen[185:237, 135:185]
-    g1Name = compareAndGetName(screenGrip1, "resource/grip/")
+    g1Name = compareAndGetName(screenGrip1, "./resource/grip/")
     # 1915, 582, 50, 52  1
     screenGrip2 = screen[458:510, 135:185]
-    g2Name = compareAndGetName(screenGrip2, "resource/grip/")
+    g2Name = compareAndGetName(screenGrip2, "./resource/grip/")
     # 枪托 2344,314,50,48 1
     screenButt1 = screen[189:237, 564:614]
     butt1Name = compareAndGetName(screenButt1, "./resource/butt/")
@@ -85,10 +85,9 @@ def recognizeEquiment():
     gun2 = c_wepone(w2Name, m2Name, muzzleName2, g2Name, butt2Name)
     print(w1Name, m1Name, muzzleName1, g1Name, butt1Name)
     print(w2Name, m2Name, muzzleName2, g2Name, butt2Name)
-    mainWindow.global_main_window.label_gun_1.setText(w1Name)
-    mainWindow.global_main_window.label_gun_2.setText(w2Name)
     c_equipment.wepone1 = gun1
     c_equipment.wepone2 = gun2
+    mainWindow.global_main_window.update_equipment()
 
 
 def isBagOpen():

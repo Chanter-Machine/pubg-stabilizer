@@ -2,9 +2,10 @@ import time
 
 import pydirectinput
 
-from contants import c_contants
-from equipment import getCurrentWepone
-import mainWindow
+from model.contants import c_contants
+from model.equipment import getCurrentWepone, c_equipment
+from model.wepon import c_wepone
+from view_model import mainWindow
 
 pydirectinput.PAUSE = 0
 
@@ -12,7 +13,8 @@ pydirectinput.PAUSE = 0
 def changeOpen():
     c_mouse.openFlag = not c_mouse.openFlag
     print("open: {}".format(c_mouse.openFlag))
-    mainWindow.global_main_window.label_run.setText("运行中" if c_mouse.openFlag else "已停止")
+    mainWindow.global_main_window.update_mouse_control_status()
+
 
 
 def moveMouse():
@@ -84,12 +86,17 @@ def onClick(x, y, button, pressed):
     return not c_contants.exitFlag
 
 
-# 按下f1测试程序生效
+# 按下f12测试程序生效
 def testMouse():
-    if c_mouse.openFlag:
-        for i in range(10):
-            pydirectinput.moveRel(xOffset=0, yOffset=10)
-            time.sleep(0.1)
+    gun1 = c_wepone('akm', '', '', '', '')
+    gun2 = c_wepone('m416', '', '', '', '')
+    c_equipment.wepone1 = gun1
+    c_equipment.wepone2 = gun2
+    mainWindow.global_main_window.update_equipment()
+    # if c_mouse.openFlag:
+    #     for i in range(10):
+    #         pydirectinput.moveRel(xOffset=0, yOffset=10)
+    #         time.sleep(0.1)
 
 
 # 是否可以开火

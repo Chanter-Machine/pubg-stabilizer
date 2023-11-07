@@ -1,4 +1,4 @@
-from contants import c_contants
+from model.contants import c_contants
 class c_wepone():
     def __init__(self, name = 'none', mirror = '', muzzle = '', grip = '', butt = ''):
         '''
