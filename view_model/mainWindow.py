@@ -13,19 +13,17 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.label_run = self.ui.label_run
-        self.label_use_gun = self.ui.label_use_gun
-        self.label_gun_1 = self.ui.label_gun_1
-        self.label_gun_2 = self.ui.label_gun_2
+
+        self.ui.pushButton_edit1.clicked.connect(self.on_pushButton_edit1_keyPressEvent)
+        self.ui.pushButton_edit2.clicked.connect(self.on_pushButton_edit2_keyPressEvent)
+        self.ui.pushButton_save1.clicked.connect(self.on_pushButton_save1_keyPressEvent)
+        self.ui.pushButton_save2.clicked.connect(self.on_pushButton_save2_keyPressEvent)
+
         model.keyListen.init_listener()
         self.keyboard_listener = c_contants.keyboard_listener
         self.mouse_listener = c_contants.mouse_listener
         self.keyboard_listener.start()
         self.mouse_listener.start()
-        self.ui.pushButton_edit1.clicked.connect(self.on_pushButton_edit1_keyPressEvent)
-        self.ui.pushButton_edit2.clicked.connect(self.on_pushButton_edit2_keyPressEvent)
-        self.ui.pushButton_save1.clicked.connect(self.on_pushButton_save1_keyPressEvent)
-        self.ui.pushButton_save2.clicked.connect(self.on_pushButton_save2_keyPressEvent)
 
     # 重写 closeEvent 方法
     def closeEvent(self, event):
@@ -56,6 +54,9 @@ class MainWindow(QMainWindow):
             c_equipment.wepone2.basic = new_basic_config
         except:
             QMessageBox.information(None, "Error", "保存配置失败")
+
+    def update_use_gun(self, gun_name):
+        self.ui.label_use_gun.setText(gun_name)
 
     def update_equipment(self):
         self.ui.label_gun_1.setText(c_equipment.wepone1.name)

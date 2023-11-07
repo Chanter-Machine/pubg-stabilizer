@@ -28,20 +28,20 @@ def onRelease(key):
         if '1' == key.char:
             print("weapon 1")
             c_equipment.switch = 1
-            mainWindow.global_main_window.label_use_gun.setText(c_equipment.wepone1.name)
+            mainWindow.global_main_window.update_use_gun(c_equipment.wepone1.name)
         elif '2' == key.char:
             print("weapon 2")
             c_equipment.switch = 2
-            mainWindow.global_main_window.label_use_gun.setText(c_equipment.wepone2.name)
+            mainWindow.global_main_window.update_use_gun(c_equipment.wepone2.name)
         elif '3' == key.char:  # 手枪
             c_equipment.switch = 3
-            mainWindow.global_main_window.label_use_gun.setText("手枪")
+            mainWindow.global_main_window.update_use_gun("手枪")
         elif '4' == key.char:  # 刀具
             c_equipment.switch = 3
-            mainWindow.global_main_window.label_use_gun.setText("刀具")
+            mainWindow.global_main_window.update_use_gun("刀具")
         elif '5' == key.char:  # 手雷
             c_equipment.switch = 3
-            mainWindow.global_main_window.label_use_gun.setText("手雷")
+            mainWindow.global_main_window.update_use_gun("手雷")
         elif 'c' == key.char or 'z' == key.char:
             asyncHandlePosture()
         # print("key char" + str(key.char))

@@ -88,15 +88,15 @@ def onClick(x, y, button, pressed):
 
 # 按下f12测试程序生效
 def testMouse():
-    gun1 = c_wepone("akm", "none", "none", "none", "none")
-    gun2 = c_wepone("m416", "none", "none", "none", "none")
+    gun1 = c_wepone('akm', '', '', '', '')
+    gun2 = c_wepone('m416', '', '', '', '')
     c_equipment.wepone1 = gun1
     c_equipment.wepone2 = gun2
     mainWindow.global_main_window.update_equipment()
-    if c_mouse.openFlag:
-        for i in range(10):
-            pydirectinput.moveRel(xOffset=0, yOffset=10)
-            time.sleep(0.1)
+    # if c_mouse.openFlag:
+    #     for i in range(10):
+    #         pydirectinput.moveRel(xOffset=0, yOffset=10)
+    #         time.sleep(0.1)
 
 
 # 是否可以开火
