@@ -45,7 +45,7 @@ class MainWindow(QMainWindow):
         new_basic_config_string = self.ui.gun1_textEdit.toPlainText()
         try:
             new_basic_config = json.loads(new_basic_config_string)
-            c_equipment.wepone1.basic = new_basic_config
+            c_contants.guns[c_equipment.wepone1.name]["basic"] = new_basic_config
         except:
             QMessageBox.information(None, "Error", "保存配置失败")
 
@@ -54,7 +54,7 @@ class MainWindow(QMainWindow):
         new_basic_config_string = self.ui.gun2_textEdit.toPlainText()
         try:
             new_basic_config = json.loads(new_basic_config_string)
-            c_equipment.wepone2.basic = new_basic_config
+            c_contants.guns[c_equipment.wepone2.name]["basic"] = new_basic_config
         except:
             QMessageBox.information(None, "Error", "保存配置失败")
 
