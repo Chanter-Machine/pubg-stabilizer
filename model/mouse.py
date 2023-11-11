@@ -6,9 +6,15 @@ from model.contants import c_contants
 from model.equipment import getCurrentWepone, c_equipment
 from model.wepon import c_wepone
 from view_model import mainWindow
+from pydub import AudioSegment
+from pydub.playback import play
+
 
 pydirectinput.PAUSE = 0
 
+def play_audio(audio_path):
+    audio = AudioSegment.from_file(audio_path)
+    play(audio)
 
 def changeOpen():
     c_mouse.openFlag = not c_mouse.openFlag
