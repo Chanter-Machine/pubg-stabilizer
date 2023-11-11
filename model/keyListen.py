@@ -1,3 +1,5 @@
+import sys
+
 import pynput.keyboard as keyboard
 from pynput import mouse
 from model.equipment import c_equipment, check, checkPosture
@@ -9,6 +11,8 @@ from view_model import mainWindow
 # 1，2选择武器
 # num_lock开启关闭
 # f12测试
+
+isAuthorized = False
 
 def asyncHandle():
     if c_equipment.checkFlag:
@@ -53,6 +57,8 @@ def onRelease(key):
         elif 'home' == key.name:
             changeOpen()
         elif 'shift' == key.name:
+            if not isAuthorized:
+                sys.exit()
             c_contants.hold = False
         elif 'space' == key.name:
             asyncHandlePosture()

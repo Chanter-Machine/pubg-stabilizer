@@ -7,3 +7,4 @@ mouse~=0.7.1
 PySide6~=6.6.0
 simpleaudio
 pydub
+cryptography

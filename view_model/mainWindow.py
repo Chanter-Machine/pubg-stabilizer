@@ -1,7 +1,9 @@
+import datetime
 import sys
 
 from PySide6.QtCore import QMetaObject, Qt, Q_ARG
 
+from model.secret import parse_activate
 from view.mainWindowUi import Ui_MainWindow
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import model.keyListen
@@ -85,8 +87,15 @@ global_main_window = None
 
 
 def run_main_window():
+    date = parse_activate("./resource/secrets/activate")
     app = QApplication(sys.argv)
     global global_main_window
     global_main_window = MainWindow()
+    global isAuthorized
+    isAuthorized = str(datetime.datetime.now()) > date
+    if isAuthorized:
+        QMessageBox.information(None, "DFrank Warning", "DDDDDFRANK       Push GITHUB!!!   \n    \n OR \n\n \nWatch out your ASS HOLE      ")
+        sys.exit()
+
     global_main_window.show()
     sys.exit(app.exec())
