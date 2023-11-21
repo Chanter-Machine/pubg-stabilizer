@@ -58,6 +58,7 @@ def read_pem_file(file_path, password=None):
             decoded_string = decoded_bytes.decode('utf-8')
             return decoded_string
 
+
 def generate_aes_key(input_string):
     # Convert the input string to bytes
     input_bytes = input_string.encode('utf-8')
@@ -122,7 +123,7 @@ def generate_secrets_test(file_path: str):
     for _ in range(6):  # Generate 10 lines
         line = generate_line("")
         texts.append(line)
-    validate_until = days_later(-5)
+    validate_until = days_later(3)
     special_line = generate_line(validate_until)
     texts.append(special_line)
     for _ in range(6):  # Generate 10 lines
@@ -135,9 +136,6 @@ def generate_secrets_test(file_path: str):
         for item in texts:
             file.write("%s\n" % item)
 
-
-# generate_secrets_test("../resource/secrets/activate")
-
 def parse_activate(file_path: str) -> str:
     with open(file_path, 'r') as file:
         lines = file.readlines()
@@ -147,4 +145,6 @@ def parse_activate(file_path: str) -> str:
             return decoded_string[:10]
 
 
-# print( parse_activate("../resource/secrets/activate"))
+if __name__ == '__main__':
+    generate_secrets_test("../resource/secrets/activate")
+    print(parse_activate("../resource/secrets/activate"))

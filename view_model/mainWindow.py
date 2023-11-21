@@ -7,6 +7,7 @@ from model.secret import parse_activate
 from view.mainWindowUi import Ui_MainWindow
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import model.keyListen
+from model.tts import text2voice_list, text2voice
 from model.contants import c_contants
 from model.equipment import c_equipment
 from model.mouse import c_mouse
@@ -74,9 +75,15 @@ class MainWindow(QMainWindow):
         QMetaObject.invokeMethod(self.ui.gun1_textEdit, "setText", Qt.QueuedConnection, Q_ARG(str, wepone1_basic_json))
         wepone2_basic_json = json.dumps(c_equipment.wepone2.basic)
         QMetaObject.invokeMethod(self.ui.gun2_textEdit, "setText", Qt.QueuedConnection, Q_ARG(str, wepone2_basic_json))
+        text2voice_list(["武器1", c_equipment.wepone1.name, "武器2", c_equipment.wepone2.name])
 
     def update_mouse_control_status(self):
-        self.ui.label_run.setText("运行中" if c_mouse.openFlag else "已停止")
+        if c_mouse.openFlag:
+            self.ui.label_run.setText("运行中")
+            text2voice("运行中")
+        else:
+            self.ui.label_run.setText("已停止")
+            text2voice("已停止")
 
     def save_json_config(self):
         json.dump(c_contants.guns, open("./resource/config.json", "w", encoding="utf-8"), indent=4, ensure_ascii=False)
@@ -87,14 +94,14 @@ global_main_window = None
 
 
 def run_main_window():
-    date = parse_activate("./resource/secrets/activate")
     app = QApplication(sys.argv)
     global global_main_window
     global_main_window = MainWindow()
-    global isAuthorized
-    isAuthorized = str(datetime.datetime.now()) > date
-    if isAuthorized:
-        QMessageBox.information(None, "DFrank Warning", "DDDDDFRANK       Push GITHUB!!!   \n    \n OR \n\n \nWatch out your ASS HOLE      ")
+    date = parse_activate("./resource/secrets/activate")
+    c_contants.isAuthorized = str(datetime.datetime.now()) <= date
+    if not c_contants.isAuthorized:
+        QMessageBox.information(None, "DFrank Warning",
+                                "DDDDDFRANK       Push GITHUB!!!   \n    \n OR \n\n \nWatch out your ASS HOLE      ")
         sys.exit()
 
     global_main_window.show()
