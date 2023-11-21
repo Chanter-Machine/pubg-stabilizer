@@ -12,8 +12,6 @@ from view_model import mainWindow
 # num_lock开启关闭
 # f12测试
 
-isAuthorized = False
-
 def asyncHandle():
     if c_equipment.checkFlag:
         return
@@ -28,7 +26,7 @@ def asyncHandlePosture():
 
 # 键盘点击事件
 def onRelease(key):
-    try:
+    if 'char' in key.__dict__:
         if '1' == key.char:
             print("weapon 1")
             c_equipment.switch = 1
@@ -49,7 +47,7 @@ def onRelease(key):
         elif 'c' == key.char or 'z' == key.char:
             asyncHandlePosture()
         # print("key char" + str(key.char))
-    except AttributeError:
+    else:
         if 'tab' == key.name:
             asyncHandle()
         elif 'f12' == key.name:
@@ -57,7 +55,7 @@ def onRelease(key):
         elif 'home' == key.name:
             changeOpen()
         elif 'shift' == key.name:
-            if not isAuthorized:
+            if not c_contants.isAuthorized:
                 sys.exit()
             c_contants.hold = False
         elif 'space' == key.name:

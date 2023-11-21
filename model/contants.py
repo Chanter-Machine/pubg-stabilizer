@@ -2,6 +2,7 @@ from concurrent.futures import ThreadPoolExecutor
 import json
 
 class c_contants():
+    isAuthorized = False
     # 程序退出标记
     exitFlag = False
     #背包打开标记
