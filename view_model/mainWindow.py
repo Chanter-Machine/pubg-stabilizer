@@ -75,7 +75,7 @@ class MainWindow(QMainWindow):
         QMetaObject.invokeMethod(self.ui.gun1_textEdit, "setText", Qt.QueuedConnection, Q_ARG(str, wepone1_basic_json))
         wepone2_basic_json = json.dumps(c_equipment.wepone2.basic)
         QMetaObject.invokeMethod(self.ui.gun2_textEdit, "setText", Qt.QueuedConnection, Q_ARG(str, wepone2_basic_json))
-        text2voice_list(["武器1", c_equipment.wepone1.name, "武器2", c_equipment.wepone2.name])
+        # text2voice_list(["武器1", c_equipment.wepone1.name, "武器2", c_equipment.wepone2.name])
 
     def update_mouse_control_status(self):
         if c_mouse.openFlag:
