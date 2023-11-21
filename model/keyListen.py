@@ -23,7 +23,7 @@ def asyncHandlePosture():
         return
     c_contants.pool.submit(checkPosture)
 
-1
+
 # 键盘点击事件
 def onRelease(key):
     if 'char' in key.__dict__:
