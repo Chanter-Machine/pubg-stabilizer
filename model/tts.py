@@ -22,8 +22,8 @@ async def generate_voice(text):
 
 
 async def text2voice_task(text):
-    if not c_contants.isAuthorized:
-        sys.exit()
+    # if not c_contants.isAuthorized:
+    #     sys.exit()
     try:
         if not os.path.exists(VOICE_BASE_PATH + text + ".mp3"):
             await generate_voice(text)
@@ -45,7 +45,10 @@ def text2voice(text):
 def text2voice_list(text_list):
     asyncio.run(text2voice_list_task(text_list))
 
+def init_voice():
+    guns_list = list(c_contants.guns.keys())
+    text2voice_list(guns_list)
 
 if __name__ == '__main__':
     VOICE_BASE_PATH = "../resource/voice/"
-    asyncio.run(text2voice("已停止"))
+    init_voice()
